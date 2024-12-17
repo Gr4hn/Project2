@@ -9,34 +9,45 @@
 #include <cstdlib>
 #include <queue>
 #include <atomic>
+#include <iomanip>
+
 
 //Namespace standards
 using namespace std;
 using namespace std::literals::chrono_literals;
 using namespace chrono;
 
-//Defince a mutex
+//Define a mutex
 mutex protectData;
+
+//Define atomic
+atomic<bool> running(true);
+atomic<bool> dataReady(false);
 
 //temperatur Celsius double, Luftfuktighet % double, vindhastighet = m/s double
 struct Values {
-    double temp;
-    double airMoist;
-    double windSpeed;
+    double temp = 0.0;
+    double airMoist = 0.0;
+    double windSpeed = 0.0;
 };
 
 //Våra värden ska hela tiden kunna hålla 10 värden för att behållas som uppdaterade i realtid.
 //Gamla värden ska raderas för att sedan uppdateras med nya värden.
-queue<Values> data;
+//queue<Values> data;
+
+vector<Values> data(10);
+
+
 
 //Definitioner av funktioner
-void tempReading (); // Punkt 1 i uppgiften
-void airMoistReading (); // Punkt 1 i uppgiften
-void windSpeedReading (); // Punkt 1 i uppgiften
-void popValues (queue<Values>& data); // Punkt 2 i uppgiften
-void addValues (queue<Values>& data); // Punkt 2 i uppgiften
-void collectData (queue<Values>& data); // Punkt 3 i uppgiften
-void displayData (queue<Values>& data); // Punkt 4 i uppgiften
+void tempReading (Values& dataSet); // Punkt 1 i uppgiften
+void airMoistReading (Values& dataSet); // Punkt 1 i uppgiften
+void windSpeedReading (Values& dataSet); // Punkt 1 i uppgiften
+void popValues (vector<Values>& data); // Punkt 2 i uppgiften
+void addValues (vector<Values>& data); // Punkt 2 i uppgiften
+void collectData (vector<Values>& data, Values& dataSet); // Punkt 3 i uppgiften
+void displayData (vector<Values>& data); // Punkt 4 i uppgiften
+void resetTempValues(Values &dataSet);
 
 /* data.push();
 data.push(); */
