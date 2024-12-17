@@ -72,17 +72,16 @@ void collectData (vector<Values>& data, Values& dataSet)
 //exempel på utskrift
 void displayData(vector<Values>& data) 
 {
-    auto start_time = chrono::steady_clock::now();
+    
 
     while (running) {
-        auto now = chrono::steady_clock::now();
-        auto timepassed = duration_cast<seconds>(now - start_time).count();
-
+        
+        this_thread::sleep_for(seconds(2));
         // Visa senaste data varannan sekund
-        if (timepassed % 2 == 0 && data.empty() == false) {
+        if (data.empty() == false) {
             lock_guard<mutex> lock (protectData);
             cout << "Senaste data (uppdateras var 2:a sekund): " << endl;
-            this_thread::sleep_for(milliseconds(150)); // För att undvika dubbla utskrifter samma sekund
+            
             cout << "------ Data ------" << endl;
 
             cout << fixed << setprecision(2)
@@ -90,10 +89,18 @@ void displayData(vector<Values>& data)
                  << "Humidity: " << data.back().airMoist << "%, "
                  << "Wind Speed: " << data.back().windSpeed << " m/s" << endl
                  << "------------------" << endl;
-        }
 
-        // Visa statistik var 10:e sekund
-        if (timepassed % 10 == 0 && data.empty() == false) {
+            this_thread::sleep_for(seconds(2));
+        }
+    }
+};
+
+// Visa statistik var 10:e sekund
+void displayStatistics(vector<Values>& data) {
+
+    this_thread::sleep_for(seconds(10));
+
+    if (data.empty() == false) {
             lock_guard<mutex> lock (protectData);
 
             struct Values average;
@@ -135,7 +142,7 @@ void displayData(vector<Values>& data)
             average.windSpeed = average.windSpeed / data.size();
 
             cout << "Statistik (visas var 10:e sekund): " << endl;
-            this_thread::sleep_for(milliseconds(150)); // För att undvika flera utskrifter samma sekund
+            
             cout << "------ Statistik ------" << endl;
             cout << fixed << setprecision(2)
 
@@ -153,14 +160,10 @@ void displayData(vector<Values>& data)
                  << "Lowest Humidity: " << min.airMoist << "%, "
                  << "Lowest Wind Speed: " << min.windSpeed << " m/s" << endl
                  << "------------------" << endl;
+
+            this_thread::sleep_for(seconds(10));
         }
-        // beräkna genomsnitt
-        // Pausa tråden lite så att CPU inte överbelastas
-        this_thread::sleep_for(milliseconds(200));
-    }
-};
-
-
+}
 
 
 
@@ -176,8 +179,9 @@ int main ()
     thread windSpeed(windSpeedReading, ref(dataSet));
     thread collecting(collectData, ref(data), ref(dataSet));
     thread dataDisplay(displayData, ref(data));
+    thread statisticsDisplay(displayStatistics, ref(data));
 
-    this_thread::sleep_for(seconds(30));
+    this_thread::sleep_for(seconds(60));
     running = false;
     
     //displayData(data);
