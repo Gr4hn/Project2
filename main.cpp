@@ -2,13 +2,16 @@
 
 void tempReading (Values& dataSet) 
 {
+    cout << "Temp reading started:\n";
     while (running) 
-    {
+    {   
+        {
         lock_guard<mutex> lock(protectData);
         dataSet.temp = rand() % 30 + 5; // Random number for temp
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         { 
             dataReady = true;
+        }
         }
         this_thread::sleep_for(milliseconds(500)); //tempReading sleeps for 0.5 seconds.
     }
@@ -16,13 +19,16 @@ void tempReading (Values& dataSet)
 
 void airMoistReading (Values& dataSet) 
 {
+    cout << "Moist reading started.\n";
     while (running) 
-    {
+    {   
+        {
         lock_guard<mutex> lock(protectData);
         dataSet.airMoist = rand() % 100; // Random number airMoist
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope. 
         { 
             dataReady = true;
+        }
         }
         this_thread::sleep_for(milliseconds(500)); //airMoistReading sleeps for 0.5 seconds.
     }
@@ -30,13 +36,16 @@ void airMoistReading (Values& dataSet)
 
 void windSpeedReading (Values& dataSet) 
 {
+    cout << "Wind reading started.\n";
     while (running) 
-    {
+    {   
+        {
         lock_guard<mutex> lock(protectData);
         dataSet.windSpeed = rand() % 20 + 1; // Random number for windSpeed
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         {
             dataReady = true;
+        }
         }
         this_thread::sleep_for(milliseconds(500)); //windSpeedReading sleeps for 0.5 seconds.
     }
@@ -52,6 +61,7 @@ void resetTempValues(Values &dataSet)
 
 void collectData (vector<Values>& data, Values& dataSet) 
 {
+    cout << "Data collection started\n";
     while (running) 
     {
         if (dataReady) 
@@ -72,11 +82,11 @@ void collectData (vector<Values>& data, Values& dataSet)
 //exempel på utskrift
 void displayData(vector<Values>& data) 
 {
-    
+    cout << "displaydata started\n";
 
     while (running) {
         
-        this_thread::sleep_for(seconds(2));
+        //this_thread::sleep_for(seconds(2));
         // Visa senaste data varannan sekund
         if (data.empty() == false) {
             lock_guard<mutex> lock (protectData);
@@ -90,23 +100,25 @@ void displayData(vector<Values>& data)
                  << "Wind Speed: " << data.back().windSpeed << " m/s" << endl
                  << "------------------" << endl;
 
-            this_thread::sleep_for(seconds(2));
+            
         }
+    this_thread::sleep_for(seconds(2));
     }
 };
 
 // Visa statistik var 10:e sekund
 void displayStatistics(vector<Values>& data) {
-
-    this_thread::sleep_for(seconds(10));
-
+    cout << "Displaystatistics started\n";
+    //this_thread::sleep_for(seconds(10));
+    while (running) {
     if (data.empty() == false) {
+            
+
+            struct Values average = {0.0, 0.0, 0.0};
+            struct Values min = {1000.0, 1000.0, 1000.0};
+            struct Values max = {0.0, 0.0, 0.0};
+            
             lock_guard<mutex> lock (protectData);
-
-            struct Values average;
-            struct Values min;
-            struct Values max;
-
             for (auto& MAM : data) {
                 //samla in alla instanser för de olika värdena
                 average.temp += MAM.temp;
@@ -160,9 +172,9 @@ void displayStatistics(vector<Values>& data) {
                  << "Lowest Humidity: " << min.airMoist << "%, "
                  << "Lowest Wind Speed: " << min.windSpeed << " m/s" << endl
                  << "------------------" << endl;
-
-            this_thread::sleep_for(seconds(10));
         }
+        this_thread::sleep_for(seconds(10));
+    }
 }
 
 
@@ -184,8 +196,6 @@ int main ()
     this_thread::sleep_for(seconds(60));
     running = false;
     
-    //displayData(data);
-    
 
     //Här bör vi sätta in en if else sats som kollar om de kan joinas, och om inte 
     //så skriver den ut något om att den inte kan hitta detta.
@@ -194,6 +204,7 @@ int main ()
     windSpeed.join();
     collecting.join();
     dataDisplay.join();
+    statisticsDisplay.join();
             
     return 0;
 };
