@@ -68,7 +68,7 @@ void collectData (vector<Values>& data, Values& dataSet)
     }
 };
 
-//
+
 //exempel på utskrift
 void displayData(vector<Values>& data) 
 {
@@ -78,77 +78,86 @@ void displayData(vector<Values>& data)
         auto now = chrono::steady_clock::now();
         auto timepassed = duration_cast<seconds>(now - start_time).count();
 
-/*         // Beräkna hur lång tid som har gått
-        this_thread::sleep_for(seconds(1));
-        auto now = chrono::steady_clock::now();
-        auto elapsed_seconds = chrono::duration_cast<chrono::seconds>(now - start_time).count(); */
-
         // Visa senaste data varannan sekund
-        if (/*elapsed_seconds*/ timepassed % 2 == 0) {
+        if (timepassed % 2 == 0 && data.empty() == false) {
             lock_guard<mutex> lock (protectData);
             cout << "Senaste data (uppdateras var 2:a sekund): " << endl;
-            this_thread::sleep_for(milliseconds(200)); // För att undvika dubbla utskrifter samma sekund
+            this_thread::sleep_for(milliseconds(150)); // För att undvika dubbla utskrifter samma sekund
             cout << "------ Data ------" << endl;
-            for (const auto& value : data) 
-            {
-                //data.end().temp
-                cout << fixed << setprecision(2) << &data.front();
 
-                   /*  << "Temp: " << value.temp << " C, "
-                    << "Humidity: " << value.airMoist << "%, "
-                    << "Wind Speed: " << value.windSpeed << " m/s" << endl; */
-            }
-            cout << "------------------" << endl;
+            cout << fixed << setprecision(2)
+                 << "Temp: " << data.back().temp << " C, "
+                 << "Humidity: " << data.back().airMoist << "%, "
+                 << "Wind Speed: " << data.back().windSpeed << " m/s" << endl
+                 << "------------------" << endl;
         }
 
         // Visa statistik var 10:e sekund
-        if (timepassed % 10 == 0) {
+        if (timepassed % 10 == 0 && data.empty() == false) {
             lock_guard<mutex> lock (protectData);
-            cout << "Statistik (visas var 10:e sekund): " << endl;
-            this_thread::sleep_for(milliseconds(200)); // För att undvika flera utskrifter samma sekund
-            cout << "------ Statistik ------" << endl;
-            for (const auto& value : data) 
-            {
-                cout << fixed << setprecision(2)
-                    << "Temp: " << value.temp << " C, "
-                    << "Humidity: " << value.airMoist << "%, "
-                    << "Wind Speed: " << value.windSpeed << " m/s" << endl;
+
+            struct Values average;
+            struct Values min;
+            struct Values max;
+
+            for (auto& MAM : data) {
+                //samla in alla instanser för de olika värdena
+                average.temp += MAM.temp;
+                average.airMoist += MAM.airMoist;
+                average.windSpeed += MAM.windSpeed;
+
+                //Får fram högsta värderna i data.
+                if (MAM.temp > max.temp) {
+                    max.temp = MAM.temp;
+                }
+                if (MAM.airMoist > max.airMoist) {
+                    max.airMoist = MAM.airMoist;
+                }
+                if (MAM.windSpeed > max.windSpeed) {
+                    max.windSpeed = MAM.windSpeed;
+                }
+
+                //Får fram minsta värderna i data.
+                if (MAM.temp < min.temp) {
+                    min.temp = MAM.temp;
+                }
+                if (MAM.airMoist < min.airMoist) {
+                    min.airMoist = MAM.airMoist;
+                }
+                if (MAM.windSpeed < min.windSpeed) {
+                    min.windSpeed = MAM.windSpeed;
+                }
             }
-            cout << "------------------" << endl;
+            
+            //Få från genomsnittliga värderna
+            average.temp = average.temp / data.size();
+            average.airMoist = average.airMoist / data.size();
+            average.windSpeed = average.windSpeed / data.size();
+
+            cout << "Statistik (visas var 10:e sekund): " << endl;
+            this_thread::sleep_for(milliseconds(150)); // För att undvika flera utskrifter samma sekund
+            cout << "------ Statistik ------" << endl;
+            cout << fixed << setprecision(2)
+
+                 << "Average Temp: " << average.temp << " C, "
+                 << "Average Humidity: " << average.airMoist << "%, "
+                 << "Average Wind Speed: " << average.windSpeed << " m/s" << endl
+                 << "------------------" << endl
+
+                 << "Highest Temp: " << max.temp << " C, "
+                 << "Highest Humidity: " << max.airMoist << "%, "
+                 << "Highest Wind Speed: " << max.windSpeed << " m/s" << endl
+                 << "------------------" << endl
+
+                 << "Lowest Temp: " << min.temp << " C, "
+                 << "Lowest Humidity: " << min.airMoist << "%, "
+                 << "Lowest Wind Speed: " << min.windSpeed << " m/s" << endl
+                 << "------------------" << endl;
         }
         // beräkna genomsnitt
         // Pausa tråden lite så att CPU inte överbelastas
         this_thread::sleep_for(milliseconds(200));
     }
-
-/*     while (running) 
-    {
-        //this_thread::sleep_for(seconds(10));
-        lock_guard<mutex> lock(protectData);
-
-        cout << "------ Data ------" << endl;
-        for (const auto& value : data) 
-        {
-            cout << fixed << setprecision(2)
-                 << "Temp: " << value.temp << " C, "
-                 << "Humidity: " << value.airMoist << "%, "
-                 << "Wind Speed: " << value.windSpeed << " m/s" << endl;
-        }
-        cout << "------------------" << endl;
-        this_thread::sleep_for(seconds(2));
-
-        cout << "------ Data ------" << endl;
-        for (const auto& value : data) 
-        {
-            cout << fixed << setprecision(2)
-                 << "Temp: " << value.temp << " C, "
-                 << "Humidity: " << value.airMoist << "%, "
-                 << "Wind Speed: " << value.windSpeed << " m/s" << endl;
-        }
-        cout << "------------------" << endl;
-        this_thread::sleep_for(seconds(10));
-
-    } */
 };
 
 
@@ -160,7 +169,7 @@ int main ()
     srand(time(NULL));
 
     struct Values dataSet;
-    vector<Values> data(10);
+    vector<Values> data;
 
     thread temp(tempReading, ref(dataSet));
     thread airMoist(airMoistReading, ref(dataSet));

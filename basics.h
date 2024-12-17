@@ -12,6 +12,7 @@
 #include <iomanip>
 
 
+
 //Namespace standards
 using namespace std;
 using namespace std::literals::chrono_literals;
@@ -35,8 +36,6 @@ struct Values {
 //Gamla värden ska raderas för att sedan uppdateras med nya värden.
 //queue<Values> data;
 
-vector<Values> data(10);
-
 
 
 //Definitioner av funktioner
@@ -46,18 +45,6 @@ void windSpeedReading (Values& dataSet); // Punkt 1 i uppgiften
 void collectData (vector<Values>& data, Values& dataSet); // Punkt 3 i uppgiften
 void displayData (vector<Values>& data); // Punkt 4 i uppgiften
 void resetTempValues(Values &dataSet);
-
-/* data.push();
-data.push(); */
-
-//queue:
-    //pop = Removes the first element
-    //front = Access the first element
-    //back = Access the last element
-
-
-
-
 
 #endif
 
