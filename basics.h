@@ -43,8 +43,6 @@ vector<Values> data(10);
 void tempReading (Values& dataSet); // Punkt 1 i uppgiften
 void airMoistReading (Values& dataSet); // Punkt 1 i uppgiften
 void windSpeedReading (Values& dataSet); // Punkt 1 i uppgiften
-void popValues (vector<Values>& data); // Punkt 2 i uppgiften
-void addValues (vector<Values>& data); // Punkt 2 i uppgiften
 void collectData (vector<Values>& data, Values& dataSet); // Punkt 3 i uppgiften
 void displayData (vector<Values>& data); // Punkt 4 i uppgiften
 void resetTempValues(Values &dataSet);
