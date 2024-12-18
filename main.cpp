@@ -1,47 +1,60 @@
 #include "basics.h"
 
+//Genererar data för temp och skickar tillbaka det till objektet.
 void tempReading (Values& dataSet) 
 {
+    cout << "Temp reading started:\n"; //Debugging utskrift
     while (running) 
-    {
+    {   
+        {
         lock_guard<mutex> lock(protectData);
         dataSet.temp = rand() % 30 + 5; // Random number for temp
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         { 
-            dataReady = true;
+            dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
+        }
         }
         this_thread::sleep_for(milliseconds(500)); //tempReading sleeps for 0.5 seconds.
     }
 };
 
+//Genererar data för luftfuktighet och skickar tillbaka det till objektet.
 void airMoistReading (Values& dataSet) 
 {
+    cout << "Moist reading started.\n"; //Debugging utskrift
     while (running) 
-    {
+    {   
+        {
         lock_guard<mutex> lock(protectData);
         dataSet.airMoist = rand() % 100; // Random number airMoist
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope. 
         { 
-            dataReady = true;
+            dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
+        }
         }
         this_thread::sleep_for(milliseconds(500)); //airMoistReading sleeps for 0.5 seconds.
     }
 };
 
+//Genererar data för vindhastighet och skickar tillbaka det till objektet.
 void windSpeedReading (Values& dataSet) 
 {
+    cout << "Wind reading started.\n"; //Debugging utskrift
     while (running) 
-    {
+    {   
+        {
         lock_guard<mutex> lock(protectData);
         dataSet.windSpeed = rand() % 20 + 1; // Random number for windSpeed
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         {
-            dataReady = true;
+            dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
+        }
         }
         this_thread::sleep_for(milliseconds(500)); //windSpeedReading sleeps for 0.5 seconds.
     }
 };
 
+//Nollställer värderna i objektet dataset
 void resetTempValues(Values &dataSet) 
 {
     dataSet.temp = 0.0;
@@ -52,6 +65,7 @@ void resetTempValues(Values &dataSet)
 
 void collectData (vector<Values>& data, Values& dataSet) 
 {
+    cout << "Data collection started\n"; //Debugging utskrift
     while (running) 
     {
         if (dataReady) 
@@ -61,97 +75,116 @@ void collectData (vector<Values>& data, Values& dataSet)
             {
                 data.erase(data.begin()); // = data.erase(data[0]);
             }
-            data.push_back(dataSet);
-            resetTempValues(dataSet);
-            dataReady = false;
+            data.push_back(dataSet);    //Skickar in dataset i data
+            resetTempValues(dataSet);   //Nollställer dataset
+            dataReady = false;          //Slår av data för att visa att det inte finns någon ny data.
         }
     }
 };
 
-//
-//exempel på utskrift
+// Visa senaste data varannan sekund
 void displayData(vector<Values>& data) 
 {
-    auto start_time = chrono::steady_clock::now();
+    cout << "displaydata started\n"; //Debugging utskrift
 
     while (running) {
-        auto now = chrono::steady_clock::now();
-        auto timepassed = duration_cast<seconds>(now - start_time).count();
 
-/*         // Beräkna hur lång tid som har gått
-        this_thread::sleep_for(seconds(1));
-        auto now = chrono::steady_clock::now();
-        auto elapsed_seconds = chrono::duration_cast<chrono::seconds>(now - start_time).count(); */
-
-        // Visa senaste data varannan sekund
-        if (/*elapsed_seconds*/ timepassed % 2 == 0) {
+        //Ser till att funktionen inte körs om vectorn är tom.
+        if (data.empty() == false) {
             lock_guard<mutex> lock (protectData);
             cout << "Senaste data (uppdateras var 2:a sekund): " << endl;
-            this_thread::sleep_for(milliseconds(200)); // För att undvika dubbla utskrifter samma sekund
+            
             cout << "------ Data ------" << endl;
-            for (const auto& value : data) 
-            {
-                //data.end().temp
-                cout << fixed << setprecision(2) << &data.front();
 
-                   /*  << "Temp: " << value.temp << " C, "
-                    << "Humidity: " << value.airMoist << "%, "
-                    << "Wind Speed: " << value.windSpeed << " m/s" << endl; */
-            }
-            cout << "------------------" << endl;
-        }
+            cout << fixed << setprecision(2)
+                 << "Temp: " << data.back().temp << " C, "
+                 << "Humidity: " << data.back().airMoist << "%, "
+                 << "Wind Speed: " << data.back().windSpeed << " m/s" << endl
+                 << "------------------" << endl;
 
-        // Visa statistik var 10:e sekund
-        if (timepassed % 10 == 0) {
-            lock_guard<mutex> lock (protectData);
-            cout << "Statistik (visas var 10:e sekund): " << endl;
-            this_thread::sleep_for(milliseconds(200)); // För att undvika flera utskrifter samma sekund
-            cout << "------ Statistik ------" << endl;
-            for (const auto& value : data) 
-            {
-                cout << fixed << setprecision(2)
-                    << "Temp: " << value.temp << " C, "
-                    << "Humidity: " << value.airMoist << "%, "
-                    << "Wind Speed: " << value.windSpeed << " m/s" << endl;
-            }
-            cout << "------------------" << endl;
+            
         }
-        // beräkna genomsnitt
-        // Pausa tråden lite så att CPU inte överbelastas
-        this_thread::sleep_for(milliseconds(200));
+    this_thread::sleep_for(seconds(2));
     }
-
-/*     while (running) 
-    {
-        //this_thread::sleep_for(seconds(10));
-        lock_guard<mutex> lock(protectData);
-
-        cout << "------ Data ------" << endl;
-        for (const auto& value : data) 
-        {
-            cout << fixed << setprecision(2)
-                 << "Temp: " << value.temp << " C, "
-                 << "Humidity: " << value.airMoist << "%, "
-                 << "Wind Speed: " << value.windSpeed << " m/s" << endl;
-        }
-        cout << "------------------" << endl;
-        this_thread::sleep_for(seconds(2));
-
-        cout << "------ Data ------" << endl;
-        for (const auto& value : data) 
-        {
-            cout << fixed << setprecision(2)
-                 << "Temp: " << value.temp << " C, "
-                 << "Humidity: " << value.airMoist << "%, "
-                 << "Wind Speed: " << value.windSpeed << " m/s" << endl;
-        }
-        cout << "------------------" << endl;
-        this_thread::sleep_for(seconds(10));
-
-    } */
 };
 
+// Visa statistik var 10:e sekund
+void displayStatistics(vector<Values>& data) {
+    
+    cout << "Displaystatistics started\n";
+    
+    while (running) {
+    
+    //Ser till att funktionen inte körs om vectorn är tom.
+    if (data.empty() == false) {
+            
+            //Object för att lagra värderna för respektive statistik
+            struct Values average = {0.0, 0.0, 0.0};
+            struct Values min = {1000.0, 1000.0, 1000.0};
+            struct Values max = {0.0, 0.0, 0.0};
+            
+            lock_guard<mutex> lock (protectData);
 
+            //MAM = Min Average Max
+            for (auto& MAM : data) {
+
+                //samlar in alla instanser för de olika värdena
+                average.temp += MAM.temp;
+                average.airMoist += MAM.airMoist;
+                average.windSpeed += MAM.windSpeed;
+
+                //Får fram högsta värderna i data.
+                if (MAM.temp > max.temp) {
+                    max.temp = MAM.temp;
+                }
+                if (MAM.airMoist > max.airMoist) {
+                    max.airMoist = MAM.airMoist;
+                }
+                if (MAM.windSpeed > max.windSpeed) {
+                    max.windSpeed = MAM.windSpeed;
+                }
+
+                //Får fram minsta värderna i data.
+                if (MAM.temp < min.temp) {
+                    min.temp = MAM.temp;
+                }
+                if (MAM.airMoist < min.airMoist) {
+                    min.airMoist = MAM.airMoist;
+                }
+                if (MAM.windSpeed < min.windSpeed) {
+                    min.windSpeed = MAM.windSpeed;
+                }
+            }
+            
+            //Få fram genomsnittliga värderna
+            average.temp = average.temp / data.size();
+            average.airMoist = average.airMoist / data.size();
+            average.windSpeed = average.windSpeed / data.size();
+
+            cout << "Statistik (visas var 10:e sekund): " << endl;
+            
+            //Skriver ut statistik genom att använda sig av objekten ovan.
+            cout << "------ Statistik ------" << endl;
+            cout << fixed << setprecision(2)
+
+                 << "Average Temp: " << average.temp << " C, "
+                 << "Average Humidity: " << average.airMoist << "%, "
+                 << "Average Wind Speed: " << average.windSpeed << " m/s" << endl
+                 << "------------------" << endl
+
+                 << "Highest Temp: " << max.temp << " C, "
+                 << "Highest Humidity: " << max.airMoist << "%, "
+                 << "Highest Wind Speed: " << max.windSpeed << " m/s" << endl
+                 << "------------------" << endl
+
+                 << "Lowest Temp: " << min.temp << " C, "
+                 << "Lowest Humidity: " << min.airMoist << "%, "
+                 << "Lowest Wind Speed: " << min.windSpeed << " m/s" << endl
+                 << "------------------" << endl;
+        }
+        this_thread::sleep_for(seconds(10));
+    }
+}
 
 
 
@@ -160,27 +193,63 @@ int main ()
     srand(time(NULL));
 
     struct Values dataSet;
-    vector<Values> data(10);
+    vector<Values> data;
 
     thread temp(tempReading, ref(dataSet));
     thread airMoist(airMoistReading, ref(dataSet));
     thread windSpeed(windSpeedReading, ref(dataSet));
     thread collecting(collectData, ref(data), ref(dataSet));
     thread dataDisplay(displayData, ref(data));
+    thread statisticsDisplay(displayStatistics, ref(data));
 
-    this_thread::sleep_for(seconds(30));
+    this_thread::sleep_for(seconds(60));
     running = false;
     
-    //displayData(data);
-    
 
-    //Här bör vi sätta in en if else sats som kollar om de kan joinas, och om inte 
-    //så skriver den ut något om att den inte kan hitta detta.
-    temp.join();
-    airMoist.join();
-    windSpeed.join();
-    collecting.join();
-    dataDisplay.join();
+    //if satser för att avgöra om det går att utföra join för varje thread.
+    //Placerar ut en join om joinable returnerar sant.
+    //Skriver ut ett errormeddelande om det ej går att placera join.
+    if (temp.joinable()) {
+        temp.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (airMoist.joinable()) {
+        airMoist.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    } 
+
+    if (windSpeed.joinable()) {
+        windSpeed.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (collecting.joinable()) {
+        collecting.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (dataDisplay.joinable()) {
+        dataDisplay.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (statisticsDisplay.joinable()) {
+        statisticsDisplay.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
             
     return 0;
 };
