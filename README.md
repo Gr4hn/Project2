@@ -1,3 +1,9 @@
+# Instructions
+När programmet körs kommer en seed att sättas för att kunna beräkna tid enligt den nuvarande användares klocka. Programmet kommer därefter att skapa 1 struct (avsedd att hålla "mjuk" data) samt en vector (avsedd att hålla i "hård" data). 
+Programmet skapar sedan (i nuläget kan behöva ändras i framtiden) 5 trådar som har olika uppgifter. Tråd 1 genererar en slumpmässig temperatur, tråd 2 genererar en slumpmässig luftfuktighet, tråd 3 generar en slumpmässig vindhastighet. När tråd 1,2 och 3 har data redo kommer kommer ett meddelande skickas ut att det finns data redo att hämtas. Tråd 4 som ständigt kollar efter detta kommer då att gå in och ta bort det äldsta värdet (bland de hårda värdena) innan det lägger in det nya värdet (det mjuka värdet i vectorn för de hårda värdena). Den sista tråden kommer därefter att varannan sekund att printa ut det senaste värdet som har lagts in i vectorn medans statistik (Max, min och medelvärde) printas varje 10:e sekund. I dessa trådar används en atomic<bool> för att säkerställa att alla uppgifter ska köras tills dess att förhållandet ändras. Efter detta kommer man till main-trådens "sleep_for(seconds(x))" där användaren själv kan ange hur länge programmet ska köras. Efter att den har kört klart sätts vår atomic till "false" för att meddela samtliga threads som använder detta att avsluta sin uppgift. Efter detta kommer programmet att vänta in samtliga threads innan programmet avslutas.
+
+OBS! Allt sker samtidigt, men inte pararellt.
+
 # Software Requirements Specification (SRS)
 ## 1. Introduction
 #### 1.1 Purpose
