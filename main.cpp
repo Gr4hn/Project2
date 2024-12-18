@@ -5,11 +5,13 @@ void tempReading (Values& dataSet)
 {
     while (running) 
     {
-        lock_guard<mutex> lock(protectData);
-        dataSet.temp = rand() % 30 + 5; // Random number for temp
-        if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
-        { 
-            dataReady = true;
+        {
+            lock_guard<mutex> lock(protectData);
+            dataSet.temp = rand() % 30 + 5; // Random number for temp
+            if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
+            { 
+                dataReady = true;
+            }
         }
         this_thread::sleep_for(milliseconds(500)); //tempReading sleeps for 0.5 seconds.
     }
@@ -19,11 +21,13 @@ void airMoistReading (Values& dataSet)
 {
     while (running) 
     {
-        lock_guard<mutex> lock(protectData);
-        dataSet.airMoist = rand() % 100; // Random number airMoist
-        if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope. 
-        { 
-            dataReady = true;
+        {
+            lock_guard<mutex> lock(protectData);
+            dataSet.airMoist = rand() % 100; // Random number airMoist
+            if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope. 
+            { 
+                dataReady = true;
+            }
         }
         this_thread::sleep_for(milliseconds(500)); //airMoistReading sleeps for 0.5 seconds.
     }
@@ -33,11 +37,13 @@ void windSpeedReading (Values& dataSet)
 {
     while (running) 
     {
-        lock_guard<mutex> lock(protectData);
-        dataSet.windSpeed = rand() % 20 + 1; // Random number for windSpeed
-        if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         {
-            dataReady = true;
+            lock_guard<mutex> lock(protectData);
+            dataSet.windSpeed = rand() % 20 + 1; // Random number for windSpeed
+            if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
+            {
+                dataReady = true;
+            }
         }
         this_thread::sleep_for(milliseconds(500)); //windSpeedReading sleeps for 0.5 seconds.
     }
