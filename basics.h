@@ -12,7 +12,6 @@
 #include <iomanip>
 
 
-
 //Namespace standards
 using namespace std;
 using namespace std::literals::chrono_literals;
@@ -31,12 +30,6 @@ struct Values {
     double airMoist = 0.0;
     double windSpeed = 0.0;
 };
-
-//Våra värden ska hela tiden kunna hålla 10 värden för att behållas som uppdaterade i realtid.
-//Gamla värden ska raderas för att sedan uppdateras med nya värden.
-//queue<Values> data;
-
-
 
 //Definitioner av funktioner
 void tempReading (Values& dataSet); // Punkt 1 i uppgiften

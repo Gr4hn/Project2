@@ -1,8 +1,9 @@
 #include "basics.h"
 
+//Genererar data för temp och skickar tillbaka det till objektet.
 void tempReading (Values& dataSet) 
 {
-    cout << "Temp reading started:\n";
+    cout << "Temp reading started:\n"; //Debugging utskrift
     while (running) 
     {   
         {
@@ -10,16 +11,17 @@ void tempReading (Values& dataSet)
         dataSet.temp = rand() % 30 + 5; // Random number for temp
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         { 
-            dataReady = true;
+            dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
         }
         }
         this_thread::sleep_for(milliseconds(500)); //tempReading sleeps for 0.5 seconds.
     }
 };
 
+//Genererar data för luftfuktighet och skickar tillbaka det till objektet.
 void airMoistReading (Values& dataSet) 
 {
-    cout << "Moist reading started.\n";
+    cout << "Moist reading started.\n"; //Debugging utskrift
     while (running) 
     {   
         {
@@ -27,16 +29,17 @@ void airMoistReading (Values& dataSet)
         dataSet.airMoist = rand() % 100; // Random number airMoist
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope. 
         { 
-            dataReady = true;
+            dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
         }
         }
         this_thread::sleep_for(milliseconds(500)); //airMoistReading sleeps for 0.5 seconds.
     }
 };
 
+//Genererar data för vindhastighet och skickar tillbaka det till objektet.
 void windSpeedReading (Values& dataSet) 
 {
-    cout << "Wind reading started.\n";
+    cout << "Wind reading started.\n"; //Debugging utskrift
     while (running) 
     {   
         {
@@ -44,13 +47,14 @@ void windSpeedReading (Values& dataSet)
         dataSet.windSpeed = rand() % 20 + 1; // Random number for windSpeed
         if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         {
-            dataReady = true;
+            dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
         }
         }
         this_thread::sleep_for(milliseconds(500)); //windSpeedReading sleeps for 0.5 seconds.
     }
 };
 
+//Nollställer värderna i objektet dataset
 void resetTempValues(Values &dataSet) 
 {
     dataSet.temp = 0.0;
@@ -61,7 +65,7 @@ void resetTempValues(Values &dataSet)
 
 void collectData (vector<Values>& data, Values& dataSet) 
 {
-    cout << "Data collection started\n";
+    cout << "Data collection started\n"; //Debugging utskrift
     while (running) 
     {
         if (dataReady) 
@@ -71,23 +75,21 @@ void collectData (vector<Values>& data, Values& dataSet)
             {
                 data.erase(data.begin()); // = data.erase(data[0]);
             }
-            data.push_back(dataSet);
-            resetTempValues(dataSet);
-            dataReady = false;
+            data.push_back(dataSet);    //Skickar in dataset i data
+            resetTempValues(dataSet);   //Nollställer dataset
+            dataReady = false;          //Slår av data för att visa att det inte finns någon ny data.
         }
     }
 };
 
-
-//exempel på utskrift
+// Visa senaste data varannan sekund
 void displayData(vector<Values>& data) 
 {
-    cout << "displaydata started\n";
+    cout << "displaydata started\n"; //Debugging utskrift
 
     while (running) {
-        
-        //this_thread::sleep_for(seconds(2));
-        // Visa senaste data varannan sekund
+
+        //Ser till att funktionen inte körs om vectorn är tom.
         if (data.empty() == false) {
             lock_guard<mutex> lock (protectData);
             cout << "Senaste data (uppdateras var 2:a sekund): " << endl;
@@ -108,19 +110,25 @@ void displayData(vector<Values>& data)
 
 // Visa statistik var 10:e sekund
 void displayStatistics(vector<Values>& data) {
+    
     cout << "Displaystatistics started\n";
-    //this_thread::sleep_for(seconds(10));
+    
     while (running) {
+    
+    //Ser till att funktionen inte körs om vectorn är tom.
     if (data.empty() == false) {
             
-
+            //Object för att lagra värderna för respektive statistik
             struct Values average = {0.0, 0.0, 0.0};
             struct Values min = {1000.0, 1000.0, 1000.0};
             struct Values max = {0.0, 0.0, 0.0};
             
             lock_guard<mutex> lock (protectData);
+
+            //MAM = Min Average Max
             for (auto& MAM : data) {
-                //samla in alla instanser för de olika värdena
+
+                //samlar in alla instanser för de olika värdena
                 average.temp += MAM.temp;
                 average.airMoist += MAM.airMoist;
                 average.windSpeed += MAM.windSpeed;
@@ -148,13 +156,14 @@ void displayStatistics(vector<Values>& data) {
                 }
             }
             
-            //Få från genomsnittliga värderna
+            //Få fram genomsnittliga värderna
             average.temp = average.temp / data.size();
             average.airMoist = average.airMoist / data.size();
             average.windSpeed = average.windSpeed / data.size();
 
             cout << "Statistik (visas var 10:e sekund): " << endl;
             
+            //Skriver ut statistik genom att använda sig av objekten ovan.
             cout << "------ Statistik ------" << endl;
             cout << fixed << setprecision(2)
 
@@ -197,14 +206,50 @@ int main ()
     running = false;
     
 
-    //Här bör vi sätta in en if else sats som kollar om de kan joinas, och om inte 
-    //så skriver den ut något om att den inte kan hitta detta.
-    temp.join();
-    airMoist.join();
-    windSpeed.join();
-    collecting.join();
-    dataDisplay.join();
-    statisticsDisplay.join();
+    //if satser för att avgöra om det går att utföra join för varje thread.
+    //Placerar ut en join om joinable returnerar sant.
+    //Skriver ut ett errormeddelande om det ej går att placera join.
+    if (temp.joinable()) {
+        temp.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (airMoist.joinable()) {
+        airMoist.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    } 
+
+    if (windSpeed.joinable()) {
+        windSpeed.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (collecting.joinable()) {
+        collecting.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (dataDisplay.joinable()) {
+        dataDisplay.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
+
+    if (statisticsDisplay.joinable()) {
+        statisticsDisplay.join();
+    }
+    else {
+        cout << "Error, kan ej join thread.\n";
+    }
             
     return 0;
 };
