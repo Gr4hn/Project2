@@ -1,0 +1,306 @@
+Dataset: 
+Temp: 16.000000C Humidity: 41.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 22.000000C Humidity: 67.000000% Wind Speed: 8.000000m/s
+
+Dataset: 
+Temp: 9.000000C Humidity: 34.000000% Wind Speed: 15.000000m/s
+
+Dataset: 
+Temp: 15.000000C Humidity: 69.000000% Wind Speed: 10.000000m/s
+
+Dataset: 
+Temp: 9.000000C Humidity: 24.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 23.000000C Humidity: 78.000000% Wind Speed: 19.000000m/s
+
+Dataset: 
+Temp: 23.000000C Humidity: 58.000000% Wind Speed: 19.000000m/s
+
+Dataset: 
+Temp: 27.000000C Humidity: 62.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 19.000000C Humidity: 64.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 10.000000C Humidity: 5.000000% Wind Speed: 6.000000m/s
+
+Dataset: 
+Temp: 10.000000C Humidity: 45.000000% Wind Speed: 6.000000m/s
+
+Dataset: 
+Temp: 6.000000C Humidity: 81.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 32.000000C Humidity: 27.000000% Wind Speed: 8.000000m/s
+
+Dataset: 
+Temp: 6.000000C Humidity: 61.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 16.000000C Humidity: 91.000000% Wind Speed: 12.000000m/s
+
+Dataset: 
+Temp: 30.000000C Humidity: 95.000000% Wind Speed: 16.000000m/s
+
+Dataset: 
+Temp: 7.000000C Humidity: 42.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 32.000000C Humidity: 27.000000% Wind Speed: 8.000000m/s
+
+Dataset: 
+Temp: 11.000000C Humidity: 36.000000% Wind Speed: 17.000000m/s
+
+Dataset: 
+Temp: 26.000000C Humidity: 91.000000% Wind Speed: 12.000000m/s
+
+Dataset: 
+Temp: 29.000000C Humidity: 4.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 7.000000C Humidity: 2.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 8.000000C Humidity: 53.000000% Wind Speed: 14.000000m/s
+
+Dataset: 
+Temp: 27.000000C Humidity: 92.000000% Wind Speed: 13.000000m/s
+
+Dataset: 
+Temp: 27.000000C Humidity: 82.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 26.000000C Humidity: 21.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 31.000000C Humidity: 16.000000% Wind Speed: 17.000000m/s
+
+Dataset: 
+Temp: 13.000000C Humidity: 18.000000% Wind Speed: 19.000000m/s
+
+Dataset: 
+Temp: 10.000000C Humidity: 95.000000% Wind Speed: 16.000000m/s
+
+Dataset: 
+Temp: 22.000000C Humidity: 47.000000% Wind Speed: 8.000000m/s
+
+Dataset: 
+Temp: 11.000000C Humidity: 26.000000% Wind Speed: 7.000000m/s
+
+Dataset: 
+Temp: 16.000000C Humidity: 71.000000% Wind Speed: 12.000000m/s
+
+Dataset: 
+Temp: 23.000000C Humidity: 38.000000% Wind Speed: 19.000000m/s
+
+Dataset: 
+Temp: 14.000000C Humidity: 69.000000% Wind Speed: 10.000000m/s
+
+Dataset: 
+Temp: 27.000000C Humidity: 12.000000% Wind Speed: 13.000000m/s
+
+Dataset: 
+Temp: 22.000000C Humidity: 67.000000% Wind Speed: 8.000000m/s
+
+Dataset: 
+Temp: 24.000000C Humidity: 99.000000% Wind Speed: 20.000000m/s
+
+Dataset: 
+Temp: 30.000000C Humidity: 35.000000% Wind Speed: 16.000000m/s
+
+Dataset: 
+Temp: 29.000000C Humidity: 94.000000% Wind Speed: 15.000000m/s
+
+Dataset: 
+Temp: 28.000000C Humidity: 3.000000% Wind Speed: 4.000000m/s
+
+Dataset: 
+Temp: 26.000000C Humidity: 11.000000% Wind Speed: 12.000000m/s
+
+Dataset: 
+Temp: 7.000000C Humidity: 22.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 8.000000C Humidity: 33.000000% Wind Speed: 14.000000m/s
+
+Dataset: 
+Temp: 8.000000C Humidity: 73.000000% Wind Speed: 14.000000m/s
+
+Dataset: 
+Temp: 19.000000C Humidity: 64.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 26.000000C Humidity: 41.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 6.000000C Humidity: 11.000000% Wind Speed: 12.000000m/s
+
+Dataset: 
+Temp: 28.000000C Humidity: 53.000000% Wind Speed: 14.000000m/s
+
+Dataset: 
+Temp: 33.000000C Humidity: 68.000000% Wind Speed: 9.000000m/s
+
+Dataset: 
+Temp: 22.000000C Humidity: 47.000000% Wind Speed: 8.000000m/s
+
+Dataset: 
+Temp: 19.000000C Humidity: 44.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 27.000000C Humidity: 62.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 32.000000C Humidity: 57.000000% Wind Speed: 18.000000m/s
+
+Dataset: 
+Temp: 32.000000C Humidity: 37.000000% Wind Speed: 18.000000m/s
+
+Dataset: 
+Temp: 24.000000C Humidity: 59.000000% Wind Speed: 20.000000m/s
+
+Dataset: 
+Temp: 28.000000C Humidity: 23.000000% Wind Speed: 4.000000m/s
+
+Dataset: 
+Temp: 26.000000C Humidity: 41.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 24.000000C Humidity: 29.000000% Wind Speed: 10.000000m/s
+
+Dataset: 
+Temp: 33.000000C Humidity: 78.000000% Wind Speed: 19.000000m/s
+
+Dataset: 
+Temp: 21.000000C Humidity: 16.000000% Wind Speed: 17.000000m/s
+
+Dataset: 
+Temp: 10.000000C Humidity: 35.000000% Wind Speed: 16.000000m/s
+
+Dataset: 
+Temp: 25.000000C Humidity: 90.000000% Wind Speed: 11.000000m/s
+
+Dataset: 
+Temp: 17.000000C Humidity: 42.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 23.000000C Humidity: 88.000000% Wind Speed: 9.000000m/s
+
+Dataset: 
+Temp: 21.000000C Humidity: 6.000000% Wind Speed: 7.000000m/s
+
+Dataset: 
+Temp: 15.000000C Humidity: 40.000000% Wind Speed: 1.000000m/s
+
+Dataset: 
+Temp: 7.000000C Humidity: 42.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 9.000000C Humidity: 64.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 33.000000C Humidity: 48.000000% Wind Speed: 9.000000m/s
+
+Dataset: 
+Temp: 31.000000C Humidity: 46.000000% Wind Speed: 7.000000m/s
+
+Dataset: 
+Temp: 20.000000C Humidity: 5.000000% Wind Speed: 6.000000m/s
+
+Dataset: 
+Temp: 25.000000C Humidity: 90.000000% Wind Speed: 11.000000m/s
+
+Dataset: 
+Temp: 14.000000C Humidity: 29.000000% Wind Speed: 10.000000m/s
+
+Dataset: 
+Temp: 15.000000C Humidity: 70.000000% Wind Speed: 11.000000m/s
+
+Dataset: 
+Temp: 25.000000C Humidity: 50.000000% Wind Speed: 11.000000m/s
+
+Dataset: 
+Temp: 11.000000C Humidity: 6.000000% Wind Speed: 7.000000m/s
+
+Dataset: 
+Temp: 26.000000C Humidity: 1.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 8.000000C Humidity: 93.000000% Wind Speed: 14.000000m/s
+
+Dataset: 
+Temp: 13.000000C Humidity: 48.000000% Wind Speed: 9.000000m/s
+
+Dataset: 
+Temp: 14.000000C Humidity: 29.000000% Wind Speed: 10.000000m/s
+
+Dataset: 
+Temp: 28.000000C Humidity: 23.000000% Wind Speed: 4.000000m/s
+
+Dataset: 
+Temp: 29.000000C Humidity: 84.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 9.000000C Humidity: 54.000000% Wind Speed: 15.000000m/s
+
+Dataset: 
+Temp: 11.000000C Humidity: 56.000000% Wind Speed: 17.000000m/s
+
+Dataset: 
+Temp: 25.000000C Humidity: 40.000000% Wind Speed: 1.000000m/s
+
+Dataset: 
+Temp: 21.000000C Humidity: 66.000000% Wind Speed: 7.000000m/s
+
+Dataset: 
+Temp: 31.000000C Humidity: 76.000000% Wind Speed: 17.000000m/s
+
+Dataset: 
+Temp: 16.000000C Humidity: 31.000000% Wind Speed: 12.000000m/s
+
+Dataset: 
+Temp: 33.000000C Humidity: 8.000000% Wind Speed: 9.000000m/s
+
+Dataset: 
+Temp: 29.000000C Humidity: 44.000000% Wind Speed: 5.000000m/s
+
+Dataset: 
+Temp: 14.000000C Humidity: 39.000000% Wind Speed: 20.000000m/s
+
+Dataset: 
+Temp: 31.000000C Humidity: 26.000000% Wind Speed: 7.000000m/s
+
+Dataset: 
+Temp: 18.000000C Humidity: 23.000000% Wind Speed: 4.000000m/s
+
+Dataset: 
+Temp: 22.000000C Humidity: 37.000000% Wind Speed: 18.000000m/s
+
+Dataset: 
+Temp: 33.000000C Humidity: 38.000000% Wind Speed: 19.000000m/s
+
+Dataset: 
+Temp: 13.000000C Humidity: 18.000000% Wind Speed: 19.000000m/s
+
+Dataset: 
+Temp: 17.000000C Humidity: 82.000000% Wind Speed: 3.000000m/s
+
+Dataset: 
+Temp: 14.000000C Humidity: 29.000000% Wind Speed: 10.000000m/s
+
+Dataset: 
+Temp: 16.000000C Humidity: 41.000000% Wind Speed: 2.000000m/s
+
+Dataset: 
+Temp: 8.000000C Humidity: 33.000000% Wind Speed: 14.000000m/s
+
+Dataset: 
+Temp: 10.000000C Humidity: 15.000000% Wind Speed: 16.000000m/s
+
+Dataset: 
+Temp: 24.000000C Humidity: 39.000000% Wind Speed: 20.000000m/s
+

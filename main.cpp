@@ -75,13 +75,13 @@ void collectData(vector<Values>& data, Values& dataSet) {
             }
 
             string fileTransfer = "Dataset: \n";
-            fileTransfer += "Temp: " + to_string(dataSet.temp);
-            fileTransfer += " Humidity: " + to_string(dataSet.humidity);
-            fileTransfer += " Wind Speed: " + to_string(dataSet.windSpeed) + "\n\n";
+            fileTransfer += "Temp: " + to_string(dataSet.temp) + "C";
+            fileTransfer += " Humidity: " + to_string(dataSet.humidity) + "%";
+            fileTransfer += " Wind Speed: " + to_string(dataSet.windSpeed) + "m/s\n\n";
 
             {
-                lock_guard<mutex> fileLock(fileMutex); // Protect file writing
-                ofstream outfile("./sensordata.txt", ios::app);
+                lock_guard<mutex> fileLock(fileMutex); // Protect file writing/*  */
+                ofstream outfile("C:\\chas\\kurs2\\Project2\\sensordata.txt", ios::app);
                 if (!outfile.is_open()) {
                     cerr << "Error: Could not open sensordata.txt for writing.\n";
                     return;
