@@ -10,6 +10,7 @@
 #include <queue>
 #include <atomic>
 #include <iomanip>
+#include <fstream>
 
 
 //Namespace standards
@@ -19,6 +20,7 @@ using namespace chrono;
 
 //Define a mutex
 mutex protectData;
+mutex fileMutex;
 
 //Define atomic
 atomic<bool> running(true);

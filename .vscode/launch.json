@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug with GDB",
+            "type": "cppdbg",  // For GDB
+            "request": "launch",
+            "program": "${workspaceFolder}/main.exe",  // Path to your executable
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "externalConsole": true,
+            "MIMode": "gdb",  // Use GDB for debugging
+            "miDebuggerPath": "C:/mingw/bin/gdb.exe",  // Path to GDB (adjust according to your MinGW installation)
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for GDB",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

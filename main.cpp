@@ -21,7 +21,7 @@ void tempReading (Values& dataSet)
 //Genererar data för luftfuktighet och skickar tillbaka det till objektet.
 void humidityReading (Values& dataSet) 
 {
-    cout << "Moist reading started.\n"; //Debugging utskrift
+    cout << "Humidity reading started.\n"; //Debugging utskrift
     while (running) 
     {   
         {
@@ -62,25 +62,40 @@ void resetTempValues(Values &dataSet)
     dataSet.windSpeed = 0.0;
 };
 
-
-void collectData (vector<Values>& data, Values& dataSet) 
-{
-    cout << "Data collection started\n"; //Debugging utskrift
-    while (running) 
-    {
-        if (dataReady) 
-        {
-            lock_guard<mutex> lock (protectData);
-            if (data.size() >= 10) 
+void collectData(vector<Values>& data, Values& dataSet) {
+    cout << "Data collection started\n"; // Debugging output
+    while (running) {
+        if (dataReady) {
             {
-                data.erase(data.begin()); // = data.erase(data[0]);
+                lock_guard<mutex> lock(protectData);
+                if (data.size() >= 10) {
+                    data.erase(data.begin()); // Remove oldest entry
+                }
+                data.push_back(dataSet); // Add current dataSet
             }
-            data.push_back(dataSet);    //Skickar in dataset i data
-            resetTempValues(dataSet);   //Nollställer dataset
-            dataReady = false;          //Slår av data för att visa att det inte finns någon ny data.
+
+            string fileTransfer = "Dataset: \n";
+            fileTransfer += "Temp: " + to_string(dataSet.temp);
+            fileTransfer += " Humidity: " + to_string(dataSet.humidity);
+            fileTransfer += " Wind Speed: " + to_string(dataSet.windSpeed) + "\n\n";
+
+            {
+                lock_guard<mutex> fileLock(fileMutex); // Protect file writing
+                ofstream outfile("./sensordata.txt", ios::app);
+                if (!outfile.is_open()) {
+                    cerr << "Error: Could not open sensordata.txt for writing.\n";
+                    return;
+                }
+                outfile << fileTransfer;
+                outfile.flush();
+                outfile.close();
+            }
+
+            resetTempValues(dataSet); // Reset dataSet
+            dataReady = false; // Reset dataReady flag
         }
     }
-};
+}
 
 // Visa senaste data varannan sekund
 void displayData(vector<Values>& data) 
