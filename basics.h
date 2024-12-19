@@ -27,13 +27,13 @@ atomic<bool> dataReady(false);
 //temperatur Celsius double, Luftfuktighet % double, vindhastighet = m/s double
 struct Values {
     double temp = 0.0;
-    double airMoist = 0.0;
+    double humidity = 0.0;
     double windSpeed = 0.0;
 };
 
 //Definitioner av funktioner
 void tempReading (Values& dataSet); // Punkt 1 i uppgiften
-void airMoistReading (Values& dataSet); // Punkt 1 i uppgiften
+void humidityReading (Values& dataSet); // Punkt 1 i uppgiften
 void windSpeedReading (Values& dataSet); // Punkt 1 i uppgiften
 void collectData (vector<Values>& data, Values& dataSet); // Punkt 3 i uppgiften
 void displayData (vector<Values>& data); // Punkt 4 i uppgiften

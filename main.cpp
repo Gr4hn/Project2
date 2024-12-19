@@ -9,7 +9,7 @@ void tempReading (Values& dataSet)
         {
         lock_guard<mutex> lock(protectData);
         dataSet.temp = rand() % 30 + 5; // Random number for temp
-        if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
+        if (dataSet.temp != 0.0 && dataSet.humidity != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         { 
             dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
         }
@@ -19,20 +19,20 @@ void tempReading (Values& dataSet)
 };
 
 //Genererar data för luftfuktighet och skickar tillbaka det till objektet.
-void airMoistReading (Values& dataSet) 
+void humidityReading (Values& dataSet) 
 {
     cout << "Moist reading started.\n"; //Debugging utskrift
     while (running) 
     {   
         {
         lock_guard<mutex> lock(protectData);
-        dataSet.airMoist = rand() % 100; // Random number airMoist
-        if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope. 
+        dataSet.humidity = rand() % 100; // Random number humidity
+        if (dataSet.temp != 0.0 && dataSet.humidity != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope. 
         { 
             dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
         }
         }
-        this_thread::sleep_for(milliseconds(500)); //airMoistReading sleeps for 0.5 seconds.
+        this_thread::sleep_for(milliseconds(500)); //humidityReading sleeps for 0.5 seconds.
     }
 };
 
@@ -45,7 +45,7 @@ void windSpeedReading (Values& dataSet)
         {
         lock_guard<mutex> lock(protectData);
         dataSet.windSpeed = rand() % 20 + 1; // Random number for windSpeed
-        if (dataSet.temp != 0.0 && dataSet.airMoist != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
+        if (dataSet.temp != 0.0 && dataSet.humidity != 0.0 && dataSet.windSpeed != 0.0) // If all elements doesn't have a value skip this scope.
         {
             dataReady = true; //Om alla element finns, signalera att det finns data att hämta.
         }
@@ -58,7 +58,7 @@ void windSpeedReading (Values& dataSet)
 void resetTempValues(Values &dataSet) 
 {
     dataSet.temp = 0.0;
-    dataSet.airMoist = 0.0;
+    dataSet.humidity = 0.0;
     dataSet.windSpeed = 0.0;
 };
 
@@ -98,7 +98,7 @@ void displayData(vector<Values>& data)
 
             cout << fixed << setprecision(2)
                  << "Temp: " << data.back().temp << " C, "
-                 << "Humidity: " << data.back().airMoist << "%, "
+                 << "Humidity: " << data.back().humidity << "%, "
                  << "Wind Speed: " << data.back().windSpeed << " m/s" << endl
                  << "------------------" << endl;
 
@@ -130,15 +130,15 @@ void displayStatistics(vector<Values>& data) {
 
                 //samlar in alla instanser för de olika värdena
                 average.temp += MAM.temp;
-                average.airMoist += MAM.airMoist;
+                average.humidity += MAM.humidity;
                 average.windSpeed += MAM.windSpeed;
 
                 //Får fram högsta värderna i data.
                 if (MAM.temp > max.temp) {
                     max.temp = MAM.temp;
                 }
-                if (MAM.airMoist > max.airMoist) {
-                    max.airMoist = MAM.airMoist;
+                if (MAM.humidity > max.humidity) {
+                    max.humidity = MAM.humidity;
                 }
                 if (MAM.windSpeed > max.windSpeed) {
                     max.windSpeed = MAM.windSpeed;
@@ -148,8 +148,8 @@ void displayStatistics(vector<Values>& data) {
                 if (MAM.temp < min.temp) {
                     min.temp = MAM.temp;
                 }
-                if (MAM.airMoist < min.airMoist) {
-                    min.airMoist = MAM.airMoist;
+                if (MAM.humidity < min.humidity) {
+                    min.humidity = MAM.humidity;
                 }
                 if (MAM.windSpeed < min.windSpeed) {
                     min.windSpeed = MAM.windSpeed;
@@ -158,7 +158,7 @@ void displayStatistics(vector<Values>& data) {
             
             //Få fram genomsnittliga värderna
             average.temp = average.temp / data.size();
-            average.airMoist = average.airMoist / data.size();
+            average.humidity = average.humidity / data.size();
             average.windSpeed = average.windSpeed / data.size();
 
             cout << "Statistik (visas var 10:e sekund): " << endl;
@@ -168,17 +168,17 @@ void displayStatistics(vector<Values>& data) {
             cout << fixed << setprecision(2)
 
                  << "Average Temp: " << average.temp << " C, "
-                 << "Average Humidity: " << average.airMoist << "%, "
+                 << "Average Humidity: " << average.humidity << "%, "
                  << "Average Wind Speed: " << average.windSpeed << " m/s" << endl
                  << "------------------" << endl
 
                  << "Highest Temp: " << max.temp << " C, "
-                 << "Highest Humidity: " << max.airMoist << "%, "
+                 << "Highest Humidity: " << max.humidity << "%, "
                  << "Highest Wind Speed: " << max.windSpeed << " m/s" << endl
                  << "------------------" << endl
 
                  << "Lowest Temp: " << min.temp << " C, "
-                 << "Lowest Humidity: " << min.airMoist << "%, "
+                 << "Lowest Humidity: " << min.humidity << "%, "
                  << "Lowest Wind Speed: " << min.windSpeed << " m/s" << endl
                  << "------------------" << endl;
         }
@@ -196,7 +196,7 @@ int main ()
     vector<Values> data;
 
     thread temp(tempReading, ref(dataSet));
-    thread airMoist(airMoistReading, ref(dataSet));
+    thread humidity(humidityReading, ref(dataSet));
     thread windSpeed(windSpeedReading, ref(dataSet));
     thread collecting(collectData, ref(data), ref(dataSet));
     thread dataDisplay(displayData, ref(data));
@@ -216,8 +216,8 @@ int main ()
         cout << "Error, kan ej join thread.\n";
     }
 
-    if (airMoist.joinable()) {
-        airMoist.join();
+    if (humidity.joinable()) {
+        humidity.join();
     }
     else {
         cout << "Error, kan ej join thread.\n";
