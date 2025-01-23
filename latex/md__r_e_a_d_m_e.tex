@@ -1,0 +1,137 @@
+\chapter{Instructions}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Instructions@{Instructions}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+När programmet körs kommer en seed att sättas för att kunna beräkna tid enligt den nuvarande användares klocka. Programmet kommer därefter att skapa 1 struct (avsedd att hålla "{}mjuk"{} data) samt en vector (avsedd att hålla i "{}hård"{} data). Programmet skapar sedan (i nuläget kan behöva ändras i framtiden) 5 trådar som har olika uppgifter. Tråd 1 genererar en slumpmässig temperatur, tråd 2 genererar en slumpmässig luftfuktighet, tråd 3 generar en slumpmässig vindhastighet. När tråd 1,2 och 3 har data redo kommer kommer ett meddelande skickas ut att det finns data redo att hämtas. Tråd 4 som ständigt kollar efter detta kommer då att gå in och ta bort det äldsta värdet (bland de hårda värdena) innan det lägger in det nya värdet (det mjuka värdet i vectorn för de hårda värdena). Den sista tråden kommer därefter att varannan sekund att printa ut det senaste värdet som har lagts in i vectorn medans statistik (Max, min och medelvärde) printas varje 10\+:e sekund. I dessa trådar används en atomic$<$bool$>$ för att säkerställa att alla uppgifter ska köras tills dess att förhållandet ändras. Efter detta kommer man till main-\/trådens "{}sleep\+\_\+for(seconds(x))"{} där användaren själv kan ange hur länge programmet ska köras. Efter att den har kört klart sätts vår atomic till "{}false"{} för att meddela samtliga threads som använder detta att avsluta sin uppgift. Efter detta kommer programmet att vänta in samtliga threads innan programmet avslutas.
+
+OBS! Allt sker samtidigt, men inte pararellt.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Software Requirements Specification (SRS)}{Software Requirements Specification (SRS)}}\label{md__r_e_a_d_m_e_autotoc_md1}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{\texorpdfstring{1. Introduction}{1. Introduction}}\label{md__r_e_a_d_m_e_autotoc_md2}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysubsubsubsection{\texorpdfstring{1.\+1 Purpose}{1.\+1 Purpose}}\label{md__r_e_a_d_m_e_autotoc_md3}
+Denna SRS beskriver kraven för ett system som simulerar en väderövervakningsstation. Systemet ska samla in, bearbeta och visa data från tre sensorer\+: temperatur, luftfuktighet och vindhastighet. Målet är att leverera ett realtidssystem som simulerar väderförhållanden i Sverige med periodiska uppdateringar och beräkning av statistik.\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsubsubsection{\texorpdfstring{1.\+2 Scope}{1.\+2 Scope}}\label{md__r_e_a_d_m_e_autotoc_md4}
+Systemet kommer att\+:
+
+
+\begin{DoxyItemize}
+\item Simulera sensorer med slumpmässigt genererade värden.
+\item Säkerställa trådsäker datainsamling och bearbetning med mutex.
+\item Beräkna statistik från insamlad data.
+\item Visa realtidsdata och statistik via konsolen med definierade tidsintervaller.
+\end{DoxyItemize}
+
+Applikationen är avsedd för användning i utbildning och prototyputveckling av väderstationer.\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsubsubsection{\texorpdfstring{1.\+3 Definitions, Acronyms, and Abbreviations}{1.\+3 Definitions, Acronyms, and Abbreviations}}\label{md__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item SRS\+: Software Requirements Specification.
+\item Mutex\+: Mutual Exclusion, används för att säkerställa trådsäkerhet.
+\item Realtidsdata\+: Data som genereras och visas löpande.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsubsubsection{\texorpdfstring{1.\+4 References}{1.\+4 References}}\label{md__r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyItemize}
+\item C++ Standard Library Documentation.
+\item C++ Reference Library Documentation
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{\texorpdfstring{2. Overall Description}{2. Overall Description}}\label{md__r_e_a_d_m_e_autotoc_md7}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysubsubsubsection{\texorpdfstring{2.\+1 System Overview}{2.\+1 System Overview}}\label{md__r_e_a_d_m_e_autotoc_md8}
+Systemet består av flera trådar som\+:
+
+
+\begin{DoxyItemize}
+\item Simulerar tre sensorer som genererar väderdata.
+\item Samlar in data i ett delat minnesområde.
+\item Bearbetar data för att generera statistik.
+\item Visar realtidsdata och statistik i konsolen.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsubsubsection{\texorpdfstring{2.\+2 System Constraints}{2.\+2 System Constraints}}\label{md__r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyItemize}
+\item Applikationen ska köras på en dator med stöd för C++ och trådar (t.\+ex. POSIX eller std\+::thread).
+\item Systemet måste hantera flera trådar och skydda delat minne från samtidig åtkomst.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysubsubsubsection{\texorpdfstring{2.\+3 Assumptions and Dependencies}{2.\+3 Assumptions and Dependencies}}\label{md__r_e_a_d_m_e_autotoc_md10}
+
+\begin{DoxyItemize}
+\item Sensordata antas vara slumpmässiga men realistiska inom definierade intervall.
+\item Statistiken beräknas endast på data insamlad under de senaste fem sekunderna.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysubsection{\texorpdfstring{3. Functional Requirements}{3. Functional Requirements}}\label{md__r_e_a_d_m_e_autotoc_md11}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysubsubsubsection{\texorpdfstring{3.\+1 Sensor Simulation}{3.\+1 Sensor Simulation}}\label{md__r_e_a_d_m_e_autotoc_md12}
+
+\begin{DoxyItemize}
+\item FR-\/1\+: Systemet ska simulera en temperaturgivare som genererar slumpmässiga värden mellan -\/10°C och 30°C var 500\+:e millisekund.
+\item FR-\/2\+: Systemet ska simulera en luftfuktighetsgivare som genererar slumpmässiga värden mellan 0\% och 100\% var 500\+:e millisekund.
+\item FR-\/3\+: Systemet ska simulera en vindhastighetsgivare som genererar slumpmässiga värden mellan 0 m/s och 30 m/s var 500\+:e millisekund.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysubsubsubsection{\texorpdfstring{3.\+2 Data Collection}{3.\+2 Data Collection}}\label{md__r_e_a_d_m_e_autotoc_md13}
+
+\begin{DoxyItemize}
+\item FR-\/4\+: Systemet ska använda ett delat minnesområde för att lagra de senaste värdena från varje sensor.
+\item FR-\/5\+: Systemet ska använda mutex för att skydda delat minne från samtidig åtkomst av flera trådar.
+\item FR-\/6\+: Systemet ska implementera flaggor för att signalera när ny data är tillgänglig.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysubsubsubsection{\texorpdfstring{3.\+3 Data Processing}{3.\+3 Data Processing}}\label{md__r_e_a_d_m_e_autotoc_md14}
+
+\begin{DoxyItemize}
+\item FR-\/7\+: Systemet ska beräkna statistik (medelvärde, minimum och maximum) för varje sensor var femte sekund.
+\item FR-\/8\+: Statistiken ska baseras på data insamlad under de senaste fem sekunderna.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsubsubsection{\texorpdfstring{3.\+4 Data Display}{3.\+4 Data Display}}\label{md__r_e_a_d_m_e_autotoc_md15}
+
+\begin{DoxyItemize}
+\item FR-\/9\+: Systemet ska visa de senaste sensordata i konsolen varannan sekund.
+\item FR-\/10\+: Systemet ska visa statistik (medelvärde, minimum och maximum) för varje sensor i konsolen var tionde sekund.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md16}{}\doxysubsection{\texorpdfstring{4. Non-\/functional Requirements}{4. Non-\/functional Requirements}}\label{md__r_e_a_d_m_e_autotoc_md16}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysubsubsubsection{\texorpdfstring{4.\+1 Performance Requirements}{4.\+1 Performance Requirements}}\label{md__r_e_a_d_m_e_autotoc_md17}
+
+\begin{DoxyItemize}
+\item Systemet ska hantera tre sensorer som genererar data kontinuerligt utan märkbar fördröjning.
+\item Statistikberäkningen ska vara färdig inom 500 millisekunder.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md18}{}\doxysubsubsubsection{\texorpdfstring{4.\+2 Usability Requirements}{4.\+2 Usability Requirements}}\label{md__r_e_a_d_m_e_autotoc_md18}
+
+\begin{DoxyItemize}
+\item Konsolutskrifterna ska vara lättlästa och visa sensordata och statistik i separata sektioner.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md19}{}\doxysubsubsubsection{\texorpdfstring{4.\+3 Reliability Requirements}{4.\+3 Reliability Requirements}}\label{md__r_e_a_d_m_e_autotoc_md19}
+
+\begin{DoxyItemize}
+\item Systemet ska hantera samtidig åtkomst av flera trådar utan datakorruption.
+\item Systemet ska kunna köras kontinuerligt i minst 24 timmar utan avbrott.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md20}{}\doxysubsubsubsection{\texorpdfstring{4.\+4 Portability Requirements}{4.\+4 Portability Requirements}}\label{md__r_e_a_d_m_e_autotoc_md20}
+
+\begin{DoxyItemize}
+\item Applikationen ska kunna köras på alla moderna operativsystem med stöd för C++ och trådar.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md21}{}\doxysubsection{\texorpdfstring{5. System Design (High-\/level)}{5. System Design (High-\/level)}}\label{md__r_e_a_d_m_e_autotoc_md21}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md22}{}\doxysubsubsubsection{\texorpdfstring{5.\+1 Architecture}{5.\+1 Architecture}}\label{md__r_e_a_d_m_e_autotoc_md22}
+
+\begin{DoxyItemize}
+\item {\bfseries{Sensortrådar\+:}} Varje sensor körs i en separat tråd som genererar data periodiskt.
+\item {\bfseries{Delat minne\+:}} Ett gemensamt datalager skyddat med mutex lagrar de senaste värdena.
+\item {\bfseries{Bearbetningstråd\+:}} En separat tråd ansvarar för att beräkna statistik.
+\item {\bfseries{Visningstråd\+:}} En tråd hanterar periodisk konsolutskrift av data och statistik.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md23}{}\doxysubsubsubsection{\texorpdfstring{5.\+2 Timing}{5.\+2 Timing}}\label{md__r_e_a_d_m_e_autotoc_md23}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Uppgift   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Tidsintervall    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Uppgift   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Tidsintervall    }\\\cline{1-2}
+\endhead
+Sensoruppdatering   &500 millisekunder    \\\cline{1-2}
+Realtidsdata i konsolen   &2 sekunder    \\\cline{1-2}
+Statistikberäkning   &5 sekunder    \\\cline{1-2}
+Statistik i konsolen   &10 sekunder   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md24}{}\doxysubsection{\texorpdfstring{6. Appendices}{6. Appendices}}\label{md__r_e_a_d_m_e_autotoc_md24}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md25}{}\doxysubsubsubsection{\texorpdfstring{6.\+1 Example Output}{6.\+1 Example Output}}\label{md__r_e_a_d_m_e_autotoc_md25}
+{\bfseries{Realtidsdata (varannan sekund)\+:}}
+
+{\bfseries{Tid\+:}} 12\+:00\+:02 ~\newline
+ {\bfseries{Temperatur\+:}} 12.\+5°C ~\newline
+ {\bfseries{Luftfuktighet\+:}} 45\% ~\newline
+ {\bfseries{Vindhastighet\+:}} 7.\+3 m/s ~\newline
+
+
+Statistik (var tionde sekund)\+:
+
+{\bfseries{Tid\+:}} 12\+:00\+:10 ~\newline
+ {\bfseries{Temperatur}} (Medel\+: 10.\+2°C, Min\+: -\/5.\+0°C, Max\+: 15.\+6°C) ~\newline
+ {\bfseries{Luftfuktighet}} (Medel\+: 48\%, Min\+: 30\%, Max\+: 60\%) ~\newline
+ {\bfseries{Vindhastighet}} (Medel\+: 6.\+5 m/s, Min\+: 2.\+0 m/s, Max\+: 12.\+0 m/s) ~\newline
+\hypertarget{md__r_e_a_d_m_e_autotoc_md26}{}\doxysubsection{\texorpdfstring{7. Approval}{7. Approval}}\label{md__r_e_a_d_m_e_autotoc_md26}
+Denna specifikation är godkänd av projektledaren och utvecklingsteamet som grund för implementationen. 

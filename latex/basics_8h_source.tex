@@ -1,0 +1,49 @@
+\doxysection{basics.\+h}
+\hypertarget{basics_8h_source}{}\label{basics_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ BASICDEFINITIONS}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ BASICDEFINITIONS}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//Namespace\ standards}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{using\ namespace\ }std::literals::chrono\_literals;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{using\ namespace\ }chrono;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//Define\ a\ mutex}}
+\DoxyCodeLine{00021\ mutex\ protectData;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//Define\ atomic}}
+\DoxyCodeLine{00024\ atomic<bool>\ running(\textcolor{keyword}{true});}
+\DoxyCodeLine{00025\ atomic<bool>\ dataReady(\textcolor{keyword}{false});}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//temperatur\ Celsius\ double,\ Luftfuktighet\ \%\ double,\ vindhastighet\ =\ m/s\ double}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_values}{Values}}\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{double}\ temp\ =\ 0.0;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{double}\ humidity\ =\ 0.0;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{double}\ windSpeed\ =\ 0.0;}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//Definitioner\ av\ funktioner}}
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ tempReading\ (\mbox{\hyperlink{struct_values}{Values}}\&\ dataSet);\ \textcolor{comment}{//\ Punkt\ 1\ i\ uppgiften}}
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{void}\ humidityReading\ (\mbox{\hyperlink{struct_values}{Values}}\&\ dataSet);\ \textcolor{comment}{//\ Punkt\ 1\ i\ uppgiften}}
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ windSpeedReading\ (\mbox{\hyperlink{struct_values}{Values}}\&\ dataSet);\ \textcolor{comment}{//\ Punkt\ 1\ i\ uppgiften}}
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ collectData\ (vector<Values>\&\ data,\ \mbox{\hyperlink{struct_values}{Values}}\&\ dataSet);\ \textcolor{comment}{//\ Punkt\ 3\ i\ uppgiften}}
+\DoxyCodeLine{00039\ \textcolor{keywordtype}{void}\ displayData\ (vector<Values>\&\ data);\ \textcolor{comment}{//\ Punkt\ 4\ i\ uppgiften}}
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ displayStatistics(vector<Values>\&\ data);}
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{void}\ resetTempValues(\mbox{\hyperlink{struct_values}{Values}}\ \&dataSet);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00044\ }
+
+\end{DoxyCode}
