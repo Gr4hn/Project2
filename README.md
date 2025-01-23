@@ -131,3 +131,5 @@ __Vindhastighet__ (Medel: 6.5 m/s, Min: 2.0 m/s, Max: 12.0 m/s)
 
 Denna specifikation är godkänd av projektledaren och utvecklingsteamet som grund för implementationen.
 
+## Links
+Documentation index: [Index](https://github.com/Gr4hn/Project2/blob/gh-pages/html/index.html)
