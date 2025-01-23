@@ -1,0 +1,68 @@
+\doxysection{basics.\+h File Reference}
+\hypertarget{basics_8h}{}\label{basics_8h}\index{basics.h@{basics.h}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$atomic$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_values}{Values}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{basics_8h_a789a5a0e7d8050fc317355e80fc0c4f2}\label{basics_8h_a789a5a0e7d8050fc317355e80fc0c4f2} 
+atomic$<$ bool $>$ {\bfseries running} (true)
+\item 
+\Hypertarget{basics_8h_acad6dfc348f6c3975eba32b8664632bf}\label{basics_8h_acad6dfc348f6c3975eba32b8664632bf} 
+atomic$<$ bool $>$ {\bfseries data\+Ready} (false)
+\item 
+\Hypertarget{basics_8h_af978e92e6c46d25fad24187e221f1ce6}\label{basics_8h_af978e92e6c46d25fad24187e221f1ce6} 
+void {\bfseries temp\+Reading} (\mbox{\hyperlink{struct_values}{Values}} \&data\+Set)
+\item 
+\Hypertarget{basics_8h_aa567835a4e1d9ab442cca2a9925cfe3f}\label{basics_8h_aa567835a4e1d9ab442cca2a9925cfe3f} 
+void {\bfseries humidity\+Reading} (\mbox{\hyperlink{struct_values}{Values}} \&data\+Set)
+\item 
+\Hypertarget{basics_8h_a8cf9b61037ddbf8520c2e127438266b3}\label{basics_8h_a8cf9b61037ddbf8520c2e127438266b3} 
+void {\bfseries wind\+Speed\+Reading} (\mbox{\hyperlink{struct_values}{Values}} \&data\+Set)
+\item 
+\Hypertarget{basics_8h_a2d232bf0166813914d13469ba68193aa}\label{basics_8h_a2d232bf0166813914d13469ba68193aa} 
+void {\bfseries collect\+Data} (vector$<$ \mbox{\hyperlink{struct_values}{Values}} $>$ \&data, \mbox{\hyperlink{struct_values}{Values}} \&data\+Set)
+\item 
+\Hypertarget{basics_8h_a6d0db5bb134f1e6fff4d89ec93735e3f}\label{basics_8h_a6d0db5bb134f1e6fff4d89ec93735e3f} 
+void {\bfseries display\+Data} (vector$<$ \mbox{\hyperlink{struct_values}{Values}} $>$ \&data)
+\item 
+\Hypertarget{basics_8h_ac5dc5f675f263bbe516defa4f1d69566}\label{basics_8h_ac5dc5f675f263bbe516defa4f1d69566} 
+void {\bfseries display\+Statistics} (vector$<$ \mbox{\hyperlink{struct_values}{Values}} $>$ \&data)
+\item 
+\Hypertarget{basics_8h_aa5af5686c106996d8f73b0151896e74c}\label{basics_8h_aa5af5686c106996d8f73b0151896e74c} 
+void {\bfseries reset\+Temp\+Values} (\mbox{\hyperlink{struct_values}{Values}} \&data\+Set)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{basics_8h_a821136082be73a7ef40cd229ebafa90d}\label{basics_8h_a821136082be73a7ef40cd229ebafa90d} 
+mutex {\bfseries protect\+Data}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Eric Grahn (\href{mailto:you@domain.com}{\texttt{ you@domain.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2025-\/01-\/23
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2025 
+\end{DoxyCopyright}

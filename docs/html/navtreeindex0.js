@@ -1,6 +1,7 @@
 var NAVTREEINDEX0 =
 {
 "annotated.html":[1,0],
+"basics_8h.html":[2,0,0],
 "basics_8h_source.html":[2,0,0],
 "classes.html":[1,1],
 "files.html":[2,0],
@@ -13,6 +14,7 @@ var NAVTREEINDEX0 =
 "md__r_e_a_d_m_e.html#autotoc_md21":[0,0,4],
 "md__r_e_a_d_m_e.html#autotoc_md24":[0,0,5],
 "md__r_e_a_d_m_e.html#autotoc_md26":[0,0,6],
+"md__r_e_a_d_m_e.html#autotoc_md27":[0,0,7],
 "md__r_e_a_d_m_e.html#autotoc_md7":[0,0,1],
 "pages.html":[],
 "struct_values.html":[1,0,0]

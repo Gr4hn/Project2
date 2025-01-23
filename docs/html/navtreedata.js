@@ -33,7 +33,8 @@ var NAVTREE =
         [ "Non-functional Requirements", "md__r_e_a_d_m_e.html#autotoc_md16", null ],
         [ "System Design (High-level)", "md__r_e_a_d_m_e.html#autotoc_md21", null ],
         [ "Appendices", "md__r_e_a_d_m_e.html#autotoc_md24", null ],
-        [ "Approval", "md__r_e_a_d_m_e.html#autotoc_md26", null ]
+        [ "Approval", "md__r_e_a_d_m_e.html#autotoc_md26", null ],
+        [ "Links", "md__r_e_a_d_m_e.html#autotoc_md27", null ]
       ] ]
     ] ],
     [ "Classes", "annotated.html", [
